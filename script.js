@@ -1,58 +1,125 @@
-// 获取页面元素
-const navToggle = document.querySelector('.navbar.container.nav-links');
-const menuBtn = document.querySelector('.navbar.container.menu-btn');
-const navLinks = document.querySelectorAll('.navbar.nav-links li a');
+// 获取页面元素 - 修复重复声明和选择器问题
+const navToggle = document.querySelector('.nav-links');
+const menuBtn = document.querySelector('.menu-btn');
+const navLinksElements = document.querySelectorAll('.nav-links a');
 const sections = document.querySelectorAll('section, header, footer');
-const images = document.querySelectorAll('img');
+const images = document.querySelectorAll('img[data-src]');
+const navbar = document.querySelector('.navbar');
 
-// 导航栏菜单展开收起效果（针对移动端响应式，假设屏幕较小时隐藏菜单，点击按钮展开）
-menuBtn.addEventListener('click', () => {
-    navToggle.classList.toggle('show');
-});
+// 菜单切换功能
+function toggleMenu() {
+    const navLinks = document.querySelector('.nav-links');
+    const menuButton = document.querySelector('.menu-btn');
+    
+    if (navLinks && menuButton) {
+        navLinks.classList.toggle('show');
+        
+        // 改变汉堡菜单图标
+        if (navLinks.classList.contains('show')) {
+            menuButton.innerHTML = '✕';
+        } else {
+            menuButton.innerHTML = '☰';
+        }
+    }
+}
+
+// 点击菜单按钮事件
+if (menuBtn) {
+    menuBtn.addEventListener('click', toggleMenu);
+}
 
 // 导航栏链接点击平滑滚动效果
-navLinks.forEach(link => {
+navLinksElements.forEach(link => {
     link.addEventListener('click', function (e) {
         e.preventDefault();
         const targetId = this.getAttribute('href');
         const targetSection = document.querySelector(targetId);
+        
         if (targetSection) {
+            // 计算目标位置，考虑固定导航栏高度
+            const navbarHeight = navbar ? navbar.offsetHeight : 70;
+            const targetPosition = targetSection.offsetTop - navbarHeight;
+            
             window.scrollTo({
-                top: targetSection.offsetTop - 80, // 减去导航栏高度，实现平滑滚动到对应板块顶部
+                top: targetPosition,
                 behavior: 'smooth'
             });
-            // 点击链接后关闭移动端展开的菜单（如果是移动端打开状态）
-            if (navToggle.classList.contains('show')) {
-                navToggle.classList.remove('show');
+            
+            // 关闭移动端菜单
+            const navLinks = document.querySelector('.nav-links');
+            if (navLinks && navLinks.classList.contains('show')) {
+                navLinks.classList.remove('show');
+                if (menuBtn) {
+                    menuBtn.innerHTML = '☰';
+                }
             }
         }
     });
 });
 
-// 图片懒加载示例（先简单模拟，使用 IntersectionObserver API，实际中可完善更多逻辑）
-const observer = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const img = entry.target;
-            img.src = img.dataset.src; // 替换真实图片路径
-            observer.unobserve(img);
+// 点击菜单链接后关闭菜单（移动端）
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        const navLinks = document.querySelector('.nav-links');
+        const menuButton = document.querySelector('.menu-btn');
+        
+        if (navLinks && navLinks.classList.contains('show')) {
+            navLinks.classList.remove('show');
+            if (menuButton) {
+                menuButton.innerHTML = '☰';
+            }
         }
     });
 });
-images.forEach(image => {
-    if (image.dataset.src) {
-        observer.observe(image);
+
+// 点击外部关闭菜单
+document.addEventListener('click', (e) => {
+    const navLinks = document.querySelector('.nav-links');
+    const menuButton = document.querySelector('.menu-btn');
+    const navbarContainer = document.querySelector('.navbar');
+    
+    if (navbarContainer && !navbarContainer.contains(e.target) && navLinks && navLinks.classList.contains('show')) {
+        navLinks.classList.remove('show');
+        if (menuButton) {
+            menuButton.innerHTML = '☰';
+        }
     }
 });
 
-// 页面加载时淡入动画效果示例（给所有主要板块添加淡入效果，可根据实际调整选择器）
+// 图片懒加载
+const imageObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const img = entry.target;
+            if (img.dataset.src) {
+                img.src = img.dataset.src;
+                img.classList.add('loaded');
+                observer.unobserve(img);
+            }
+        }
+    });
+}, {
+    rootMargin: '50px 0px',
+    threshold: 0.1
+});
+
+// 应用懒加载到所有带data-src的图片
+images.forEach(image => {
+    imageObserver.observe(image);
+});
+
+// 页面加载时的淡入动画效果
 window.addEventListener('load', () => {
-    sections.forEach(section => {
-        section.style.opacity = 0;
-        section.style.transition = 'opacity 0.8s ease-in-out';
+    sections.forEach((section, index) => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(20px)';
+        section.style.transition = 'opacity 0.8s ease-in-out, transform 0.8s ease-in-out';
+        
+        // 错开动画时间
         setTimeout(() => {
-            section.style.opacity = 1;
-        }, 100); // 稍微延迟让动画有顺序感，可调整延迟时间
+            section.style.opacity = '1';
+            section.style.transform = 'translateY(0)';
+        }, 100 * index);
     });
 });
 
@@ -60,36 +127,117 @@ window.addEventListener('load', () => {
 const eventItems = document.querySelectorAll('.event-item');
 eventItems.forEach(item => {
     const eventImg = item.querySelector('.event-img');
-    eventImg.addEventListener('mouseenter', () => {
-        eventImg.style.transform = 'scale(1.1)';
-        eventImg.style.transition = 'transform 0.3s ease';
-    });
-    eventImg.addEventListener('mouseleave', () => {
-        eventImg.style.transform = 'scale(1)';
-    });
+    if (eventImg) {
+        eventImg.addEventListener('mouseenter', () => {
+            eventImg.style.transform = 'scale(1.1)';
+            eventImg.style.transition = 'transform 0.3s ease';
+        });
+        
+        eventImg.addEventListener('mouseleave', () => {
+            eventImg.style.transform = 'scale(1)';
+        });
+    }
 });
 
-// 团队成员部分图片鼠标悬停显示更多信息效果（简单示例，可进一步完善样式）
+// 团队成员部分鼠标悬停效果
 const teamMembers = document.querySelectorAll('.team-member');
 teamMembers.forEach(member => {
     const memberImg = member.querySelector('.member-img');
-    const memberInfo = member.querySelector('p');
-    memberImg.addEventListener('mouseenter', () => {
-        memberInfo.style.display = 'block';
-        memberInfo.style.opacity = 1;
-        memberInfo.style.transition = 'opacity 0.3s ease';
-    });
-    memberImg.addEventListener('mouseleave', () => {
-        memberInfo.style.display = 'none';
-    });
-});
-
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-
-        navbar.classList.remove('scrolled');
+    const memberInfo = member.querySelector('.member-info, p');
+    
+    if (memberImg && memberInfo) {
+        // 初始化隐藏状态
+        memberInfo.style.opacity = '0';
+        memberInfo.style.transform = 'translateY(10px)';
+        memberInfo.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        
+        memberImg.addEventListener('mouseenter', () => {
+            memberInfo.style.opacity = '1';
+            memberInfo.style.transform = 'translateY(0)';
+        });
+        
+        memberImg.addEventListener('mouseleave', () => {
+            memberInfo.style.opacity = '0';
+            memberInfo.style.transform = 'translateY(10px)';
+        });
     }
 });
+
+// 滚动时导航栏样式变化
+if (navbar) {
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+}
+
+// 滚动时高亮当前导航项
+function updateActiveNavLink() {
+    const scrollPosition = window.scrollY + (navbar ? navbar.offsetHeight : 70) + 10;
+    
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        const sectionId = section.getAttribute('id');
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+            // 移除所有active类
+            navLinksElements.forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // 添加active类到当前section对应的链接
+            const activeLink = document.querySelector(`.nav-links a[href="#${sectionId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+    });
+}
+
+// 滚动时更新活跃导航链接
+window.addEventListener('scroll', updateActiveNavLink);
+
+// 页面加载完成后初始化活跃链接
+document.addEventListener('DOMContentLoaded', updateActiveNavLink);
+
+// 响应式处理 - 窗口大小改变时关闭移动菜单
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+        const navLinks = document.querySelector('.nav-links');
+        const menuButton = document.querySelector('.menu-btn');
+        
+        if (navLinks && navLinks.classList.contains('show')) {
+            navLinks.classList.remove('show');
+            if (menuButton) {
+                menuButton.innerHTML = '☰';
+            }
+        }
+    }
+});
+
+// 平滑滚动到顶部功能（可选）
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// 如果有返回顶部按钮，添加事件监听
+const backToTopBtn = document.querySelector('.back-to-top');
+if (backToTopBtn) {
+    backToTopBtn.addEventListener('click', scrollToTop);
+    
+    // 滚动时显示/隐藏返回顶部按钮
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
+    });
+}
