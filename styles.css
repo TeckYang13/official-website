@@ -485,83 +485,106 @@ img.loaded {
 
 /* 响应式设计 */
 @media screen and (max-width: 768px) {
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 70px;
-    left: 0;
-    width: 100%;
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-    border-radius: 0 0 10px 10px;
-  }
-  
-  .nav-links.show {
-    display: flex;
-  }
-  
-  .nav-links li {
-    margin: 15px 0;
-    margin-left: 0;
-  }
-  
-  .menu-btn {
-    display: block;
-  }
-  
-  .header {
-    padding: 150px 0 100px;
-    margin-top: 70px;
-  }
-  
-  .header h1 {
-    font-size: 36px;
-  }
-  
-  .header p {
-    font-size: 16px;
-  }
-  
-  .about-content {
-    flex-direction: column;
-    gap: 30px;
-  }
-  
-  .about-img, .about-text {
-    width: 100%;
-  }
-  
-  .event-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  
-  .team-grid {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-  
-  .container {
-    padding: 0 15px;
-  }
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        padding: 20px;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 0 0 10px 10px;
+    }
+    
+    .nav-links.show {
+        display: flex;
+    }
+    
+    .nav-links li {
+        margin: 15px 0;
+        margin-left: 0;
+    }
+    
+    .menu-btn {
+        display: block;
+    }
+    
+    .header {
+        padding: 150px 0 100px;
+        margin-top: 70px;
+    }
+    
+    .header h1 {
+        font-size: 36px;
+    }
+    
+    .header p {
+        font-size: 16px;
+    }
+    
+    .about-content {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .about-img, .about-text {
+        width: 100%;
+    }
+    
+    .event-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .team-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .container {
+        padding: 0 15px;
+    }
+    .menu-btn i.fa-times {
+    display: none; /* 默认隐藏叉叉 */
+    }
+
+    .menu-btn.active i.fa-bars {
+    display: none; /* 当 active 时隐藏汉堡 */
+    }
+
+    .menu-btn.active i.fa-times {
+    display: inline; /* 当 active 时显示叉叉 */
+    }
 }
 
+
 @media screen and (max-width: 480px) {
-  .header h1 {
-    font-size: 28px;
-  }
-  
-  .header p {
-    font-size: 14px;
-  }
-  
-  h2 {
-    font-size: 28px;
-  }
-  
-  .about-section, .events-section, .team-section, .download-section {
-    padding: 60px 0;
-  }
+    .header h1 {
+        font-size: 28px;
+    }
+    
+    .header p {
+        font-size: 14px;
+    }
+    
+    h2 {
+        font-size: 28px;
+    }
+    
+    .about-section, .events-section, .team-section, .download-section {
+        padding: 60px 0;
+    }
+    .menu-btn i.fa-times {
+    display: none; /* 默认隐藏叉叉 */
+    }
+
+    .menu-btn.active i.fa-bars {
+    display: none; /* 当 active 时隐藏汉堡 */
+    }
+
+    .menu-btn.active i.fa-times {
+    display: inline; /* 当 active 时显示叉叉 */
+    }
 }
