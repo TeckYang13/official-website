@@ -1,9 +1,14 @@
 // 获取页面元素
-const navLinks = document.getElementById('.navbar.nav-links li a');
-const sections = document.getElementById('section, header, footer');
-const images = document.getElementById('img');
+const navToggle = document.querySelector('.navbar.container.nav-links');
+const menuBtn = document.querySelector('.navbar.container.menu-btn');
+const navLinks = document.querySelectorAll('.navbar.nav-links li a');
+const sections = document.querySelectorAll('section, header, footer');
+const images = document.querySelectorAll('img');
 
 // 导航栏菜单展开收起效果（针对移动端响应式，假设屏幕较小时隐藏菜单，点击按钮展开）
+menuBtn.addEventListener('click', () => {
+    navToggle.classList.toggle('show');
+});
 
 // 导航栏链接点击平滑滚动效果
 navLinks.forEach(link => {
@@ -84,6 +89,7 @@ window.addEventListener('scroll', () => {
     if (window.scrollY > 50) {
         navbar.classList.add('scrolled');
     } else {
+
         navbar.classList.remove('scrolled');
     }
 });
