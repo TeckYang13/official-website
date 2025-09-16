@@ -1,24 +1,24 @@
-// 获取页面元素 - 修复重复声明和选择器问题
-const navToggle = document.querySelector('.nav-links');
-const menuBtn = document.querySelector('.menu-btn');
-const navLinksElements = document.querySelectorAll('.nav-links a');
-const sections = document.querySelectorAll('section, header, footer');
+// 获取页面元素 - 基于你的HTML结构
+const navToggle = document.querySelector('#nav-links');
+const menuBtn = document.querySelector('#menu-btn');
+const navLinksElements = document.querySelectorAll('#nav-links a');
+const sections = document.querySelectorAll('section, header');
 const images = document.querySelectorAll('img[data-src]');
-const navbar = document.querySelector('.navbar');
+const navbar = document.querySelector('#navbar');
 
 // 菜单切换功能
 function toggleMenu() {
-    const navLinks = document.querySelector('.nav-links');
-    const menuButton = document.querySelector('.menu-btn');
+    const navLinks = document.querySelector('#nav-links');
+    const menuIcon = document.querySelector('#menu-btn i');
     
-    if (navLinks && menuButton) {
+    if (navLinks && menuIcon) {
         navLinks.classList.toggle('show');
         
         // 改变汉堡菜单图标
         if (navLinks.classList.contains('show')) {
-            menuButton.innerHTML = '✕';
+            menuIcon.className = 'fa fa-times';
         } else {
-            menuButton.innerHTML = '☰';
+            menuIcon.className = 'fa fa-bars';
         }
     }
 }
@@ -46,11 +46,12 @@ navLinksElements.forEach(link => {
             });
             
             // 关闭移动端菜单
-            const navLinks = document.querySelector('.nav-links');
+            const navLinks = document.querySelector('#nav-links');
             if (navLinks && navLinks.classList.contains('show')) {
                 navLinks.classList.remove('show');
-                if (menuBtn) {
-                    menuBtn.innerHTML = '☰';
+                const menuIcon = document.querySelector('#menu-btn i');
+                if (menuIcon) {
+                    menuIcon.className = 'fa fa-bars';
                 }
             }
         }
@@ -58,15 +59,15 @@ navLinksElements.forEach(link => {
 });
 
 // 点击菜单链接后关闭菜单（移动端）
-document.querySelectorAll('.nav-links a').forEach(link => {
+document.querySelectorAll('#nav-links a').forEach(link => {
     link.addEventListener('click', () => {
-        const navLinks = document.querySelector('.nav-links');
-        const menuButton = document.querySelector('.menu-btn');
+        const navLinks = document.querySelector('#nav-links');
+        const menuIcon = document.querySelector('#menu-btn i');
         
         if (navLinks && navLinks.classList.contains('show')) {
             navLinks.classList.remove('show');
-            if (menuButton) {
-                menuButton.innerHTML = '☰';
+            if (menuIcon) {
+                menuIcon.className = 'fa fa-bars';
             }
         }
     });
@@ -74,14 +75,14 @@ document.querySelectorAll('.nav-links a').forEach(link => {
 
 // 点击外部关闭菜单
 document.addEventListener('click', (e) => {
-    const navLinks = document.querySelector('.nav-links');
-    const menuButton = document.querySelector('.menu-btn');
-    const navbarContainer = document.querySelector('.navbar');
+    const navLinks = document.querySelector('#nav-links');
+    const menuIcon = document.querySelector('#menu-btn i');
+    const navbarContainer = document.querySelector('#navbar');
     
     if (navbarContainer && !navbarContainer.contains(e.target) && navLinks && navLinks.classList.contains('show')) {
         navLinks.classList.remove('show');
-        if (menuButton) {
-            menuButton.innerHTML = '☰';
+        if (menuIcon) {
+            menuIcon.className = 'fa fa-bars';
         }
     }
 });
@@ -190,7 +191,7 @@ function updateActiveNavLink() {
             });
             
             // 添加active类到当前section对应的链接
-            const activeLink = document.querySelector(`.nav-links a[href="#${sectionId}"]`);
+            const activeLink = document.querySelector(`#nav-links a[href="#${sectionId}"]`);
             if (activeLink) {
                 activeLink.classList.add('active');
             }
@@ -207,13 +208,13 @@ document.addEventListener('DOMContentLoaded', updateActiveNavLink);
 // 响应式处理 - 窗口大小改变时关闭移动菜单
 window.addEventListener('resize', () => {
     if (window.innerWidth > 768) {
-        const navLinks = document.querySelector('.nav-links');
-        const menuButton = document.querySelector('.menu-btn');
+        const navLinks = document.querySelector('#nav-links');
+        const menuIcon = document.querySelector('#menu-btn i');
         
         if (navLinks && navLinks.classList.contains('show')) {
             navLinks.classList.remove('show');
-            if (menuButton) {
-                menuButton.innerHTML = '☰';
+            if (menuIcon) {
+                menuIcon.className = 'fa fa-bars';
             }
         }
     }
