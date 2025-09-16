@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diabolo Team Official Website</title>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="#" class="logo">
+        <i class="fa fa-balance-scale"></i>
+        <span>Diabolo Team</span>
+      </a>
+      
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#team">Our Team</a></li>
+        <li><a href="#download">Download App</a></li>
+      </ul>
+      
+      <div class="menu-btn" id="menu-btn">
+        <i class="fa fa-bars"></i>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Home Section -->
+  <header id="home" class="header">
+    <div class="container">
+      <h1>Welcome to the World of Diabolo</h1>
+      <p>We are a passionate diabolo team dedicated to passing down and promoting diabolo culture, allowing more people to experience its unique charm.</p>
+      <a href="#about" class="btn-primary">Learn More</a>
+    </div>
+  </header>
+
+  <!-- About Us Section -->
+  <section id="about" class="about-section">
+    <div class="container">
+      <h2>About Us</h2>
+      <div class="about-content">
+        <img src="https://picsum.photos/id/100/600/400" alt="Diabolo Team Photo" class="about-img">
+        <div class="about-text">
+          <p>Diabolo, as a traditional folk art with a long history, carries profound cultural heritage. Since its establishment in [Founding Year], our diabolo team has brought together like-minded enthusiasts. Through continuous practice and innovative performances, we actively participate in cultural events and showcase the beauty of diabolo on different stages, allowing more people to know and love this traditional art.</p>
+          <p>We uphold the values of cultural inheritance and joyful diabolo. We regularly organize internal exchange activities to sharpen skills, and we also offer public classes to teach young people and the community basic diabolo techniques, hoping to contribute to the preservation and spread of diabolo culture.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Events Section -->
+  <section id="events" class="events-section">
+    <div class="container">
+      <h2>Events</h2>
+      <div class="event-grid">
+        <div class="event-item">
+          <img src="https://picsum.photos/id/200/600/400" alt="Event 1 Photo" class="event-img">
+          <div>
+            <h3>[Event 1 Title]</h3>
+            <p>[Event 1 description, e.g., date, location, highlights, and significance]</p>
+          </div>
+        </div>
+        <div class="event-item">
+          <img src="https://picsum.photos/id/201/600/400" alt="Event 2 Photo" class="event-img">
+          <div>
+            <h3>[Event 2 Title]</h3>
+            <p>[Event 2 description, e.g., date, location, highlights, and significance]</p>
+          </div>
+        </div>
+        <div class="event-item">
+          <img src="https://picsum.photos/id/202/600/400" alt="Event 3 Photo" class="event-img">
+          <div>
+            <h3>[Event 3 Title]</h3>
+            <p>[Event 3 description, e.g., date, location, highlights, and significance]</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section id="team" class="team-section">
+    <div class="container">
+      <h2>Our Team</h2>
+      <div class="team-grid">
+        <div class="team-member">
+          <img src="https://picsum.photos/id/300/300/300" alt="Member 1 Photo" class="member-img">
+          <h3>[Member 1 Name]</h3>
+          <p>[Role and introduction of Member 1, e.g., diabolo skills, contributions to the team, etc.]</p>
+        </div>
+        <div class="team-member">
+          <img src="https://picsum.photos/id/301/300/300" alt="Member 2 Photo" class="member-img">
+          <h3>[Member 2 Name]</h3>
+          <p>[Role and introduction of Member 2, e.g., diabolo skills, contributions to the team, etc.]</p>
+        </div>
+        <div class="team-member">
+          <img src="https://picsum.photos/id/302/300/300" alt="Member 3 Photo" class="member-img">
+          <h3>[Member 3 Name]</h3>
+          <p>[Role and introduction of Member 3, e.g., diabolo skills, contributions to the team, etc.]</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download Section -->
+  <section id="download" class="download-section">
+    <div class="container">
+      <h2>Download Our Android App</h2>
+      <p>With our Android app, you can access the latest diabolo news, learn tutorials, watch exciting performances, and join online diabolo activities. Download and experience it now!</p>
+      <a href="your_app.apk" download class="download-button">
+        <i class="fa fa-download mr-2"></i>Download App
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="logo" style="justify-content: center; color: white;">
+        <i class="fa fa-balance-scale"></i>
+        <span>Diabolo Team</span>
+      </div>
+      <ul class="social-links">
+        <li><a href="https://www.facebook.com/mydiabolo.academy"><i class="fa fa-facebook"></i></a></li>
+        <li><a href="https://www.instagram.com/mydiabolo_official/"><i class="fa fa-instagram"></i></a></li>
+      </ul>
+      <p>&copy; [Year] Diabolo Team. All rights reserved.</p>
+    </div>
+  </footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuBtn = document.getElementById('menu-btn');
+      const navToggle = document.getElementById('nav-links');
+
+      menuBtn.addEventListener('click', () => {
+        navToggle.classList.toggle('show');
+      });
+    });
+  </script>
+</body>
+
+</html>
