@@ -17,6 +17,7 @@ function toggleMenu() {
         // 改变汉堡菜单图标
         if (navLinks.classList.contains('show')) {
             menuIcon.className = 'fa fa-times';
+            menuBtn.classList.toggle('active');
         } else {
             menuIcon.className = 'fa fa-bars';
         }
@@ -242,3 +243,4 @@ if (backToTopBtn) {
         }
     });
 }
+
