@@ -147,19 +147,20 @@ teamMembers.forEach(member => {
     const memberInfo = member.querySelector('.member-info, p');
     
     if (memberImg && memberInfo) {
-        // 初始化隐藏状态
-        memberInfo.style.opacity = '0';
-        memberInfo.style.transform = 'translateY(10px)';
+        // 关键修改：初始状态设置为显示
+        memberInfo.style.opacity = '1';
+        memberInfo.style.transform = 'translateY(0)';
         memberInfo.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
         
+        // 可选：如果想保留悬停图片时的其他效果（如微小放大）
         memberImg.addEventListener('mouseenter', () => {
-            memberInfo.style.opacity = '1';
-            memberInfo.style.transform = 'translateY(0)';
+            // 可以添加其他动画，比如文字颜色变化等
+            memberInfo.style.color = '#2a9d8f'; // 示例：悬停时变色
         });
         
         memberImg.addEventListener('mouseleave', () => {
-            memberInfo.style.opacity = '0';
-            memberInfo.style.transform = 'translateY(10px)';
+            // 恢复原始颜色
+            memberInfo.style.color = '#457b9d';
         });
     }
 });
@@ -178,25 +179,34 @@ if (navbar) {
 // 滚动时高亮当前导航项
 function updateActiveNavLink() {
     const scrollPosition = window.scrollY + (navbar ? navbar.offsetHeight : 70) + 10;
-    
+    const pageHeight = document.documentElement.scrollHeight;
+    const windowHeight = window.innerHeight;
+
+    let activated = false;
+
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
         const sectionHeight = section.offsetHeight;
         const sectionId = section.getAttribute('id');
-        
+
         if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-            // 移除所有active类
-            navLinksElements.forEach(link => {
-                link.classList.remove('active');
-            });
-            
-            // 添加active类到当前section对应的链接
+            navLinksElements.forEach(link => link.classList.remove('active'));
             const activeLink = document.querySelector(`#nav-links a[href="#${sectionId}"]`);
-            if (activeLink) {
-                activeLink.classList.add('active');
-            }
+            if (activeLink) activeLink.classList.add('active');
+            activated = true;
         }
     });
+
+    // 如果滚动到底部，强制高亮最后一个 section
+    if (!activated && window.scrollY + windowHeight >= pageHeight - 5) {
+        navLinksElements.forEach(link => link.classList.remove('active'));
+        const lastSection = sections[sections.length - 1];
+        if (lastSection) {
+            const lastId = lastSection.getAttribute('id');
+            const activeLink = document.querySelector(`#nav-links a[href="#${lastId}"]`);
+            if (activeLink) activeLink.classList.add('active');
+        }
+    }
 }
 
 // 滚动时更新活跃导航链接
@@ -242,5 +252,4 @@ if (backToTopBtn) {
         }
     });
 }
-
 
