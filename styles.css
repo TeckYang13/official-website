@@ -46,20 +46,24 @@ body {
   display: flex;
   align-items: center;
   text-decoration: none;
-  font-size: 24px;
+  font-size: 24px;   /* 控制文字大小 */
   font-weight: 700;
-  color: #e63946;
+  color: #FFD700;
   transition: transform 0.3s ease;
+  transform: scale(1.2);  /* 整体放大 1.2 倍 */
+  transform-origin: left center; /* 从左边放大，不会跑位 */
 }
 
 .logo:hover {
   transform: scale(1.05);
 }
 
-.logo i {
+.logo img {
+  width: 40px;   /* 控制图片大小 */
+  height: auto;  /* 自动保持比例 */
   margin-right: 10px;
-  font-size: 28px;
 }
+
 
 .nav-links {
   display: flex;
@@ -118,7 +122,7 @@ body {
 
 /* 首页头部样式 */
 .header {
-  background-image: url('https://picsum.photos/id/1059/1920/1080');
+  background-image: url('image/LWJ1.jpg');
   background-size: cover;
   background-position: center;
   color: white;
@@ -300,80 +304,80 @@ h2::after {
 
 /* 团队成员部分 */
 .team-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
 }
 
 .team-member {
-  text-align: center;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  border-radius: 10px;
-  padding: 30px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-  overflow: hidden;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    padding: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .team-member:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
 .member-img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin: 0 auto 20px;
-  border: 5px solid #f1faee;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 20px;
+    border: 5px solid #f1faee;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
 
-.team-member:hover .member-img {
-  transform: scale(1.1);
+.team-member:hover.member-img {
+    transform: scale(1.1);
 }
 
 .team-member h3 {
-  font-size: 22px;
-  color: #1d3557;
-  margin-bottom: 10px;
+    font-size: 22px;
+    color: #1d3557;
+    margin-bottom: 10px;
 }
 
+/* 关键修改部分 */
 .team-member p {
-  font-size: 16px;
-  color: #457b9d;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.3s ease;
-}
-
-.team-member:hover p {
-  opacity: 1;
-  transform: translateY(0);
+    font-size: 16px;
+    color: #457b9d;
+    /* 去除opacity: 0，将文字初始状态设置为可见 */
+    opacity: 1;
+    /* 去除transform: translateY(10px)，让文字处于正常位置 */
+    transform: translateY(0);
+    /* 可以选择保留或去除transition相关属性，这里去除过渡效果，文字直接显示 */
+    transition: none;
 }
 
 /* 下载APP部分 */
 .download-section {
-  padding: 100px 0;
-  text-align: center;
-  background-color: #1d3557;
-  color: white;
+    text-align: center;
+    background-color: #f1faee;
+    color: white;
+    margin-top: 60px;
 }
 
 .download-section h2 {
-  color: white;
+  color: #1d3557;
 }
 
 .download-section h2::after {
-  background-color: white;
+  background-color: #1d3557;
 }
 
 .download-section p {
   font-size: 18px;
   max-width: 700px;
   margin: 0 auto 40px;
+  color: #457b9d;
 }
 
 .download-button {
@@ -400,7 +404,8 @@ h2::after {
   background-color: #1d3557;
   color: white;
   text-align: center;
-  padding: 50px 0 20px;
+  padding: 20px 0 20px;
+  margin-top: 200px;
 }
 
 .social-links {
@@ -431,8 +436,15 @@ h2::after {
   transition: all 0.3s ease;
 }
 
-.social-links a:hover {
-  background-color: #e63946;
+/* Facebook */
+.social-links a.facebook:hover {
+  background-color: #1877F2; /* Facebook 蓝 */
+  transform: translateY(-5px);
+}
+
+/* Instagram */
+.social-links a.instagram:hover {
+  background-color: #E1306C; /* Instagram 粉/洋红色 */
   transform: translateY(-5px);
 }
 
