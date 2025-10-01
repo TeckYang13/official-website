@@ -58,6 +58,25 @@ navLinksElements.forEach(link => {
     });
 });
 
+// 为页面内其他锚点添加平滑滚动（例如首页的“Learn More”按钮）
+const internalAnchors = document.querySelectorAll('a[href^="#"]');
+internalAnchors.forEach(anchor => {
+    // 跳过导航栏里的链接，避免与上面的逻辑重复绑定
+    if (anchor.closest('#nav-links')) return;
+    
+    anchor.addEventListener('click', (e) => {
+        const targetId = anchor.getAttribute('href');
+        if (!targetId || targetId === '#') return;
+        const targetSection = document.querySelector(targetId);
+        if (!targetSection) return;
+
+        e.preventDefault();
+        const navbarHeight = navbar ? navbar.offsetHeight : 70;
+        const targetPosition = targetSection.offsetTop - navbarHeight;
+        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+});
+
 // 点击菜单链接后关闭菜单（移动端）
 document.querySelectorAll('#nav-links a').forEach(link => {
     link.addEventListener('click', () => {
@@ -121,6 +140,28 @@ window.addEventListener('load', () => {
             section.style.opacity = '1';
             section.style.transform = 'translateY(0)';
         }, 100 * index);
+    });
+
+    // 标注时间轴中的冠军/第一名为金色
+    document.querySelectorAll('.timeline .timeline-item').forEach(item => {
+        const content = item.textContent.toLowerCase();
+        if (content.includes('1st place') || content.includes('champion') || content.includes('first place')) {
+            item.classList.add('rank-gold');
+            return;
+        }
+        if (content.includes('2nd place') || content.includes('second place')) {
+            item.classList.add('rank-silver');
+            return;
+        }
+        if (content.includes('3rd place') || content.includes('third place')) {
+            item.classList.add('rank-bronze');
+            return;
+        }
+        // 人气/最喜爱奖项
+        if (content.includes('favourite') || content.includes('favorite')) {
+            item.classList.add('rank-favorite');
+            return;
+        }
     });
 });
 

@@ -303,58 +303,364 @@ h2::after {
 }
 
 /* 团队成员部分 */
+/* 团队成员部分 - 重新设计 */
+.team-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  position: relative;
+}
+
+.team-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23e63946" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  pointer-events: none;
+}
+
 .team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  position: relative;
+  z-index: 1;
 }
 
 .team-member {
-    text-align: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    border-radius: 10px;
-    padding: 30px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-    overflow: hidden;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 20px 16px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.team-member::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(230, 57, 70, 0.1), transparent);
+  transition: left 0.6s ease;
+}
+
+.team-member:hover::before {
+  left: 100%;
 }
 
 .team-member:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  transform: translateY(-15px) scale(1.02);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    0 8px 16px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border-color: rgba(230, 57, 70, 0.3);
+}
+
+/* 成就卡片特殊样式 */
+.team-member:last-child {
+  grid-column: 1 / -1; /* 第二行整行显示 */
+  max-width: 100%;
+  margin: 0;
+  background: linear-gradient(135deg, rgba(29, 53, 87, 0.95) 0%, rgba(69, 123, 157, 0.95) 100%);
+  color: white;
+  border: 2px solid rgba(230, 57, 70, 0.3);
+}
+
+.team-member:last-child::before {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.team-member:last-child:hover {
+  border-color: rgba(230, 57, 70, 0.6);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.2),
+    0 8px 16px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .member-img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin: 0 auto 20px;
-    border: 5px solid #f1faee;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 25px;
+  border: 4px solid #fff;
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.15),
+    0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease;
+  position: relative;
 }
 
-.team-member:hover.member-img {
-    transform: scale(1.1);
+.member-img::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #e63946, #f77f00, #e63946);
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.team-member:hover .member-img::after {
+  opacity: 1;
+}
+
+.team-member:hover .member-img {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.2),
+    0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 .team-member h3 {
-    font-size: 22px;
-    color: #1d3557;
-    margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1d3557;
+  margin-bottom: 15px;
+  line-height: 1.4;
+  position: relative;
+  padding-bottom: 10px;
 }
 
-/* 关键修改部分 */
-.team-member p {
+.team-member h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, #e63946, #f77f00);
+  border-radius: 1px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.team-member:hover h3::after {
+  opacity: 1;
+}
+
+/* 顶部两个卡片：图片在左，标题在右 */
+.team-grid .team-member:nth-child(-n+3) {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  text-align: left;
+  padding: 20px 20px;
+}
+
+.team-grid .team-member:nth-child(-n+3) .member-img {
+  width: 96px;
+  height: 96px;
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+.team-grid .team-member:nth-child(-n+2) h3 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+/* 成就卡片标题样式 */
+.team-member:last-child h2 {
+  color: #fff;
+  font-size: 28px;
+  margin-bottom: 30px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.team-member:last-child h2::after {
+  background: linear-gradient(90deg, #fff, #e63946);
+  width: 60px;
+  height: 3px;
+}
+
+/* 时间轴样式优化：双列网格，上下更紧凑 */
+.timeline {
+  position: relative;
+  margin: 20px 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px 24px;
+}
+
+.timeline-item {
+  margin-bottom: 25px;
+  position: relative;
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.timeline-item:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateX(10px);
+  border-color: rgba(230, 57, 70, 0.5);
+}
+
+/* 双列布局下移除小圆点装饰，更简洁 */
+.timeline-item::before { display: none; }
+
+.timeline-year {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 6px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.timeline-content {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* 根据内容标注的金色样式（由脚本添加 rank-gold 类） */
+.timeline .timeline-item.rank-gold {
+  border-color: rgba(255, 215, 0, 0.5);
+  box-shadow: 0 0 0 1px rgba(255, 215, 0, 0.15) inset, 0 8px 20px rgba(255, 215, 0, 0.12);
+}
+.timeline .timeline-item.rank-gold .timeline-year { color: #FFD700; }
+.timeline .timeline-item.rank-gold::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #FFD700, #ffe680);
+  border-top-left-radius: 10px; border-top-right-radius: 10px;
+}
+
+/* 银色（第二名） */
+.timeline .timeline-item.rank-silver {
+  border-color: rgba(192, 192, 192, 0.5);
+  box-shadow: 0 0 0 1px rgba(192, 192, 192, 0.15) inset, 0 8px 20px rgba(192, 192, 192, 0.12);
+}
+.timeline .timeline-item.rank-silver .timeline-year { color: #C0C0C0; }
+.timeline .timeline-item.rank-silver::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #C0C0C0, #e6e6e6);
+  border-top-left-radius: 10px; border-top-right-radius: 10px;
+}
+
+/* 铜色（第三名） */
+.timeline .timeline-item.rank-bronze {
+  border-color: rgba(205, 127, 50, 0.5);
+  box-shadow: 0 0 0 1px rgba(205, 127, 50, 0.15) inset, 0 8px 20px rgba(205, 127, 50, 0.12);
+}
+.timeline .timeline-item.rank-bronze .timeline-year { color: #CD7F32; }
+.timeline .timeline-item.rank-bronze::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #CD7F32, #e3a66a);
+  border-top-left-radius: 10px; border-top-right-radius: 10px;
+}
+
+/* 人气/最喜爱特别标记（favourite/favorite） */
+.timeline .timeline-item.rank-favorite {
+  border-color: rgba(193, 53, 132, 0.5);
+  box-shadow: 0 0 0 1px rgba(193, 53, 132, 0.15) inset, 0 8px 20px rgba(193, 53, 132, 0.12);
+}
+.timeline .timeline-item.rank-favorite .timeline-year { color: #C13584; }
+.timeline .timeline-item.rank-favorite::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #C13584, #E1306C);
+  border-top-left-radius: 10px; border-top-right-radius: 10px;
+}
+
+/* 响应式设计优化 */
+@media screen and (max-width: 768px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  
+  .team-member {
+    padding: 30px 20px;
+  }
+  
+  .member-img {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .team-member h3 {
     font-size: 16px;
-    color: #457b9d;
-    /* 去除opacity: 0，将文字初始状态设置为可见 */
-    opacity: 1;
-    /* 去除transform: translateY(10px)，让文字处于正常位置 */
-    transform: translateY(0);
-    /* 可以选择保留或去除transition相关属性，这里去除过渡效果，文字直接显示 */
-    transition: none;
+  }
+  
+  .team-member:last-child h2 {
+    font-size: 24px;
+  }
+  
+  .timeline { grid-template-columns: 1fr; }
+  
+  .timeline-item {
+    padding: 12px 15px;
+  }
+}
+
+/* 平板断点：两列时间轴 */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media screen and (max-width: 480px) {
+  .team-member {
+    padding: 25px 15px;
+  }
+  
+  .member-img {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .team-member h3 {
+    font-size: 14px;
+  }
+  
+  .timeline-year {
+    font-size: 14px;
+  }
+  
+  .timeline-content {
+    font-size: 12px;
+  }
 }
 
 /* 下载APP部分 */
@@ -553,6 +859,17 @@ img.loaded {
   .team-grid {
     grid-template-columns: 1fr;
     gap: 30px;
+  }
+  
+  /* 小屏顶部两个卡片保持左右布局，缩小头像 */
+  .team-grid .team-member:nth-child(-n+3) {
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .team-grid .team-member:nth-child(-n+3) .member-img {
+    width: 72px;
+    height: 72px;
   }
   
   .container {
