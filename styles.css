@@ -48,7 +48,7 @@ body {
   text-decoration: none;
   font-size: 24px;   /* 控制文字大小 */
   font-weight: 700;
-  color: #FFD700;
+  color: black;
   transition: transform 0.3s ease;
   transform: scale(1.2);  /* 整体放大 1.2 倍 */
   transform-origin: left center; /* 从左边放大，不会跑位 */
@@ -894,3 +894,4 @@ img.loaded {
     padding: 60px 0;
   }
 }
+
